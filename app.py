@@ -5,7 +5,7 @@ from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
 from dotenv import load_dotenv
 import os
-from datetime import datetime
+from threading import Thread
 
 # Load environment variables
 load_dotenv()
@@ -15,18 +15,16 @@ app.config["SECRET_KEY"] = os.getenv(
     "SECRET_KEY", "dev-secret-key-change-in-production"
 )
 
-# Email configuration - FIXED
+# Email configuration
 app.config["MAIL_SERVER"] = os.getenv("MAIL_SERVER", "smtp.gmail.com")
 app.config["MAIL_PORT"] = int(os.getenv("MAIL_PORT", 587))
 app.config["MAIL_USE_TLS"] = os.getenv("MAIL_USE_TLS", "True") == "True"
-app.config["MAIL_USE_SSL"] = (
-    os.getenv("MAIL_USE_SSL", "False") == "True"
-)  # Fixed: Should be False for TLS
+app.config["MAIL_USE_SSL"] = os.getenv("MAIL_USE_SSL", "False") == "True"
 app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME")
 app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD")
 app.config["MAIL_DEFAULT_SENDER"] = os.getenv("MAIL_DEFAULT_SENDER")
 
-# Debug: Print config (remove in production)
+# Debug config
 print("=" * 50)
 print("EMAIL CONFIGURATION DEBUG:")
 print(f"MAIL_SERVER: {app.config['MAIL_SERVER']}")
@@ -48,9 +46,27 @@ limiter = Limiter(
     storage_uri="memory://",
 )
 
+
+# ---------- HELPER TO SEND EMAIL ASYNC ----------
+def send_async_email(app, msg):
+    with app.app_context():
+        try:
+            mail.send(msg)
+        except Exception as e:
+            print(f"❌ Failed to send email: {e}")
+
+
+def send_email(subject, recipients, html_content, sender=None):
+    msg = Message(
+        subject=subject,
+        sender=sender or app.config["MAIL_DEFAULT_SENDER"],
+        recipients=recipients,
+    )
+    msg.html = html_content
+    Thread(target=send_async_email, args=(app, msg)).start()
+
+
 # ---------- ROUTES ----------
-
-
 @app.route("/")
 def index():
     return render_template("index.html")
@@ -79,164 +95,85 @@ def contact():
 # ---------- CONTACT FORM API ----------
 @app.route("/api/contact", methods=["POST"])
 @limiter.limit("5 per hour")
-@csrf.exempt  # Add this if testing without CSRF token
+@csrf.exempt
 def send_contact():
     try:
-        # Handle both JSON and form submissions
-        if request.is_json:
-            data = request.get_json()
-        else:
-            data = request.form
-
+        data = request.get_json() if request.is_json else request.form
         name = data.get("name", "").strip()
         email = data.get("email", "").strip()
         subject = data.get("subject", "").strip()
         message = data.get("message", "").strip()
 
-        # Validate required fields
         if not all([name, email, subject, message]):
             return (
                 jsonify({"success": False, "message": "All fields are required."}),
                 400,
             )
-
-        # Basic email validation
         if "@" not in email or "." not in email:
-            return (
-                jsonify({"success": False, "message": "Invalid email address."}),
-                400,
-            )
+            return jsonify({"success": False, "message": "Invalid email address."}), 400
 
-        admin_email = os.getenv("MAIL_DEFAULT_SENDER")
-
+        admin_email = app.config["MAIL_DEFAULT_SENDER"]
         if not admin_email:
-            print("❌ ERROR: MAIL_DEFAULT_SENDER not set in .env")
             return (
                 jsonify({"success": False, "message": "Email configuration error."}),
                 500,
             )
 
         # Send email to admin
-        msg = Message(
-            subject=f"📩 Portfolio Contact: {subject}",
-            sender=admin_email,
-            recipients=[admin_email],
-            reply_to=email,
-        )
-
-        msg.html = f"""
-        <html>
-            <body style="font-family: Arial, sans-serif; padding: 20px; background-color: #f5f5f5;">
-                <div style="max-width: 600px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px;">
-                    <h2 style="color: #333; border-bottom: 3px solid #000; padding-bottom: 10px;">
-                        New Contact Form Submission
-                    </h2>
-                    <div style="margin: 20px 0;">
-                        <p style="margin: 10px 0;"><strong>From:</strong> {name}</p>
-                        <p style="margin: 10px 0;"><strong>Email:</strong> <a href="mailto:{email}">{email}</a></p>
-                        <p style="margin: 10px 0;"><strong>Subject:</strong> {subject}</p>
-                    </div>
-                    <div style="background: #f9f9f9; padding: 20px; border-left: 4px solid #000; margin: 20px 0;">
-                        <p style="margin: 0;"><strong>Message:</strong></p>
-                        <p style="margin: 10px 0; line-height: 1.6;">{message}</p>
-                    </div>
-                    <p style="color: #666; font-size: 12px; margin-top: 20px;">
-                        Sent from your portfolio contact form
-                    </p>
-                </div>
-            </body>
-        </html>
+        admin_html = f"""
+        <p><strong>From:</strong> {name}</p>
+        <p><strong>Email:</strong> {email}</p>
+        <p><strong>Subject:</strong> {subject}</p>
+        <p><strong>Message:</strong><br>{message}</p>
         """
-
-        print(f"📧 Attempting to send email to {admin_email}...")
-        mail.send(msg)
-        print("✅ Email to admin sent successfully!")
+        send_email(
+            subject=f"📩 Portfolio Contact: {subject}",
+            recipients=[admin_email],
+            html_content=admin_html,
+            sender=admin_email,
+        )
 
         # Send auto-reply to user
-        auto_reply = Message(
-            subject="✅ Thank you for contacting me!",
-            sender=admin_email,
-            recipients=[email],
-        )
-
-        auto_reply.html = f"""
-        <html>
-            <body style="font-family: Arial, sans-serif; padding: 20px; background-color: #f5f5f5;">
-                <div style="max-width: 600px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px;">
-                    <h2 style="color: #333;">Thank You for Reaching Out!</h2>
-                    <p>Hi <strong>{name}</strong>,</p>
-                    <p style="line-height: 1.6;">
-                        Thank you for contacting me through my portfolio. I've received your message 
-                        about "<strong>{subject}</strong>" and will get back to you as soon as possible.
-                    </p>
-                    <p style="line-height: 1.6;">
-                        I typically respond within 24 hours during business days.
-                    </p>
-                    <div style="margin-top: 30px; padding-top: 20px; border-top: 2px solid #eee;">
-                        <p style="margin: 5px 0;">Best regards,</p>
-                        <p style="margin: 5px 0;"><strong>Emmanuel Victor Itopa</strong></p>
-                    </div>
-                </div>
-            </body>
-        </html>
+        user_html = f"""
+        <p>Hi {name},</p>
+        <p>Thank you for contacting me. I've received your message about "<strong>{subject}</strong>".</p>
+        <p>I'll get back to you as soon as possible.</p>
+        <p>Best regards,<br>Emmanuel Victor Itopa</p>
         """
-
-        print(f"📧 Attempting to send auto-reply to {email}...")
-        mail.send(auto_reply)
-        print("✅ Auto-reply sent successfully!")
+        send_email(
+            subject="✅ Thank you for contacting me!",
+            recipients=[email],
+            html_content=user_html,
+            sender=admin_email,
+        )
 
         return jsonify({"success": True, "message": "Message sent successfully!"}), 200
 
     except Exception as e:
-        print(f"❌ ERROR sending email: {str(e)}")
-        print(f"Error type: {type(e).__name__}")
-        import traceback
-
-        traceback.print_exc()
-
+        print(f"❌ ERROR sending contact email: {e}")
         return (
-            jsonify(
-                {
-                    "success": False,
-                    "message": f"Failed to send message: {str(e)}",
-                }
-            ),
+            jsonify({"success": False, "message": f"Failed to send message: {str(e)}"}),
             500,
         )
 
 
-# ---------- TEST EMAIL ENDPOINT ----------
+# ---------- TEST EMAIL ----------
 @app.route("/api/test-email")
 def test_email():
-    """Test endpoint to verify email configuration"""
     try:
-        admin_email = os.getenv("MAIL_DEFAULT_SENDER")
-
-        msg = Message(
+        admin_email = app.config["MAIL_DEFAULT_SENDER"]
+        html_content = "<p>This is a test email. If you receive this, your email configuration is working!</p>"
+        send_email(
             subject="✅ Test Email from Portfolio",
-            sender=admin_email,
             recipients=[admin_email],
+            html_content=html_content,
         )
-
-        msg.body = "This is a test email. If you receive this, your email configuration is working!"
-
-        mail.send(msg)
-
         return (
-            jsonify(
-                {
-                    "success": True,
-                    "message": "Test email sent successfully! Check your inbox.",
-                }
-            ),
+            jsonify({"success": True, "message": "Test email sent successfully!"}),
             200,
         )
-
     except Exception as e:
-        return (
-            jsonify({"success": False, "message": f"Test email failed: {str(e)}"}),
-            500,
-        )
+        return jsonify({"success": False, "message": f"Test email failed: {e}"}), 500
 
 
 # ---------- DOWNLOAD RESUME ----------
@@ -282,6 +219,7 @@ def internal_error(e):
     )
 
 
+# ---------- MAIN ----------
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))  # Use Render's port if available
     app.run(debug=False, host="0.0.0.0", port=port)
