@@ -11,3 +11,7 @@ services:
         generateValue: true
       - key: FLASK_ENV
         value: production
+
+        git branch -M main
+git remote add origin https://github.com/Emmyvictor/Portfolio_Website.git
+git push -u origin main
