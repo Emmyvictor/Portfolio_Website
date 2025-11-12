@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Professional Portfolio - [Your Name] - Software Developer, Researcher, and Innovator">
+    <meta name="keywords" content="portfolio, developer, software engineer, research, projects">
+    <meta name="author" content="[Your Name]">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{% block og_title %}[Your Name] - Portfolio{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Professional Portfolio{% endblock %}">
+    <meta property="og:image" content="{{ url_for('static', filename='/static/images/image.jpg') }}">
+   
+    
+    <title>{% block title %}Portfolio{% endblock %} | EMMANUEL VICTOR ITOPA</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- AOS - Animate On Scroll -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/custom.css') }}">
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'sans-serif'],
+                        'display': ['Poppins', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-white text-gray-900 font-sans">
+    
+    <!-- Navigation -->
+    <nav class="fixed w-full top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <a href="{{ url_for('index') }}" class="text-2xl font-display font-bold text-black hover:text-gray-700 transition-colors">
+                    <span class="gradient-text">VICTOR EMMANUEL ITOPA</span>
+                </a>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="{{ url_for('index') }}" class="nav-link {% if request.endpoint == 'index' %}active{% endif %}">Home</a>
+                    <a href="{{ url_for('about') }}" class="nav-link {% if request.endpoint == 'about' %}active{% endif %}">About</a>
+                    <a href="{{ url_for('projects') }}" class="nav-link {% if request.endpoint == 'projects' %}active{% endif %}">Projects</a>
+                    <a href="{{ url_for('research') }}" class="nav-link {% if request.endpoint == 'research' %}active{% endif %}">Research</a>
+                    <a href="{{ url_for('contact') }}" class="nav-link {% if request.endpoint == 'contact' %}active{% endif %}">Contact</a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden text-black focus:outline-none" id="mobile-menu-btn">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="md:hidden hidden bg-white border-t border-gray-200" id="mobile-menu">
+            <div class="px-4 py-4 space-y-3">
+                <a href="{{ url_for('index') }}" class="block nav-link-mobile {% if request.endpoint == 'index' %}active{% endif %}">Home</a>
+                <a href="{{ url_for('about') }}" class="block nav-link-mobile {% if request.endpoint == 'about' %}active{% endif %}">About</a>
+                <a href="{{ url_for('projects') }}" class="block nav-link-mobile {% if request.endpoint == 'projects' %}active{% endif %}">Projects</a>
+                <a href="{{ url_for('research') }}" class="block nav-link-mobile {% if request.endpoint == 'research' %}active{% endif %}">Research</a>
+                <a href="{{ url_for('contact') }}" class="block nav-link-mobile {% if request.endpoint == 'contact' %}active{% endif %}">Contact</a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scroll-progress"></div>
+    
+    <!-- Main Content -->
+    <main class="pt-16">
+        {% block content %}{% endblock %}
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-black text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- About Section -->
+                <div>
+                    <h3 class="text-xl font-display font-bold mb-4">About</h3>
+                    <p class="text-gray-400 leading-relaxed">
+                        Passionate software developer and researcher dedicated to building innovative solutions and contributing to cutting-edge research.
+                    </p>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-xl font-display font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="{{ url_for('index') }}" class="text-gray-400 hover:text-white transition-colors">Home</a></li>
+                        <li><a href="{{ url_for('about') }}" class="text-gray-400 hover:text-white transition-colors">About</a></li>
+                        <li><a href="{{ url_for('projects') }}" class="text-gray-400 hover:text-white transition-colors">Projects</a></li>
+                        <li><a href="{{ url_for('research') }}" class="text-gray-400 hover:text-white transition-colors">Research</a></li>
+                        <li><a href="{{ url_for('contact') }}" class="text-gray-400 hover:text-white transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Social Links -->
+                <div>
+                    <h3 class="text-xl font-display font-bold mb-4">Connect</h3>
+                    <div class="flex space-x-4">
+                        <a href="https://" target="_blank" class="social-icon" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="https://github.com/yourusername" target="_blank" class="social-icon" aria-label="GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="https://twitter.com/yourusername" target="_blank" class="social-icon" aria-label="Twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="mailto:emmydope539@gmail.com" class="social-icon" aria-label="Email">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; {{ now.year if now else '2024' }} [Vick~Codes]. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    
+    <!-- AOS JS -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <!-- Custom JS -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/animations.js') }}"></script>
+    
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

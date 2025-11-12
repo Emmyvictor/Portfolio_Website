@@ -1,0 +1,303 @@
+{% extends "base.html" %}
+
+{% block title %}Projects{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="py-32 bg-gradient-to-br from-gray-50 to-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 class="section-title text-center mx-auto" data-aos="fade-up">My Projects</h1>
+        <p class="text-center text-gray-600 text-xl max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+            A showcase of my recent work and technical expertise
+        </p>
+    </div>
+</section>
+
+<!-- Filter Section -->
+<section class="py-8 bg-white border-b border-gray-200 sticky top-0 z-40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-wrap justify-center gap-4">
+            <button class="filter-btn active" data-filter="all">All Projects</button>
+            <button class="filter-btn" data-filter="web">Web Development</button>
+            <button class="filter-btn" data-filter="mobile">Web Application</button>
+            <button class="filter-btn" data-filter="ml">Machine Learning</button>
+            <button class="filter-btn" data-filter="research">Research</button>
+            <button class="filter-btn" data-filter="opensource">Open Source</button>
+        </div>
+    </div>
+</section>
+
+<!-- Projects Grid -->
+<section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8" id="projects-grid">
+            
+            <!-- Project Card 1 -->
+            <div class="project-card" data-category="web ml" data-aos="fade-up" data-aos-delay="0">
+                <div class="card-minimal overflow-hidden group">
+                    <div class="relative overflow-hidden h-64 bg-gray-200">
+                        <img src="{{ url_for('static', filename='images/project-1.png') }}" 
+                             alt="Project 1" 
+                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all duration-300 flex items-center justify-center">
+                            <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex gap-4">
+                                <a href="https://cv-rating-system-builds.onrender.com" class="btn-primary text-sm" target="_blank">
+                                    <i class="fas fa-external-link-alt mr-2"></i>Live Demo
+                                </a>
+                                <a href="#" class="btn-secondary text-sm" target="_blank">
+                                    <i class="fab fa-github mr-2"></i>Code
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="text-xs px-3 py-1 bg-black text-white rounded-full">Flask</span>
+                            <span class="text-xs px-3 py-1 bg-black text-white rounded-full">HTML,TAILWIND</span>
+                            <span class="text-xs px-3 py-1 bg-black text-white rounded-full">JavaScript</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">CV Rating System</h3>
+                        <p class="text-gray-600 mb-4 text-justify">
+                           An AI Integrated web app that evaluates CVs using Flask, HTML, Tailwind CSS, and JavaScript.
+Features interactive dashboards and a user-friendly portal where users can upload their CVs to receive instant rating feedback and insights.
+                        </p>
+                        <div class="flex items-center justify-between text-sm text-gray-500">
+                            <span><i class="far fa-calendar mr-2"></i>2024</span>
+                            <span><i class="far fa-star mr-2"></i>Featured</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project Card 2 -->
+            <div class="project-card" data-category="web" data-aos="fade-up" data-aos-delay="100">
+                <div class="card-minimal overflow-hidden group">
+                    <div class="relative overflow-hidden h-64 bg-gray-200">
+                        <img src="{{ url_for('static', filename='images/project-2.png') }}" 
+                             alt="Project 2" 
+                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all duration-300 flex items-center justify-center">
+                            <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex gap-4">
+                                <a href="https://hotel-booking-by-aroniyo-favour.vercel.app/" class="btn-primary text-sm" target="_blank">
+                                    <i class="fas fa-external-link-alt mr-2"></i>Live Demo
+                                </a>
+                                <a href="#" class="btn-secondary text-sm" target="_blank">
+                                    <i class="fab fa-github mr-2"></i>Code
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="text-xs px-3 py-1 bg-black text-white rounded-full">React</span>
+                            <span class="text-xs px-3 py-1 bg-black text-white rounded-full">Node.js</span>
+                            <span class="text-xs px-3 py-1 bg-black text-white rounded-full">MongoDB</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">HOTEL INFORMATION SYSTEM</h3>
+                        <p class="text-gray-600 mb-4 text-justify">
+                            Hotel Information System – A web application built with React, Node.js, and MongoDB that enables users to locate and view all hotels in Lokoja, Kogi State. It includes an admin section with full CRUD functionality for managing hotel records, ensuring efficient data management and real-time updates.
+
+I prefer this response
+                        </p>
+                        <div class="flex items-center justify-between text-sm text-gray-500">
+                            <span><i class="far fa-calendar mr-2"></i>2024</span>
+                            <span><i class="far fa-eye mr-2"></i>500 views</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project Card 3 -->
+            <div class="project-card" data-category="mobile" data-aos="fade-up" data-aos-delay="200">
+                <div class="card-minimal overflow-hidden group">
+                    <div class="relative overflow-hidden h-64 bg-gray-200">
+                        <img src="{{ url_for('static', filename='images/project-3.png') }}" 
+                             alt="Project 3" 
+                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all duration-300 flex items-center justify-center">
+                            <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex gap-4">
+                                <a href="https://malaria-checker.vercel.app/" class="btn-primary text-sm" target="_blank">
+                                    <i class="fas fa-external-link-alt mr-2"></i>View Web App
+                                </a>
+                                <a href="#" class="btn-secondary text-sm" target="_blank">
+                                    <i class="fab fa-github mr-2"></i>Code
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="text-xs px-3 py-1 bg-black text-white rounded-full">React</span>
+                            <span class="text-xs px-3 py-1 bg-black text-white rounded-full">Machine Models</span>
+                            <span class="text-xs px-3 py-1 bg-black text-white rounded-full">Python</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Malaria Prediction System</h3>
+                        <p class="text-gray-600 mb-4 text-justify">
+                            Malaria Prediction App – A React-based web application integrated with machine learning models to predict malaria likelihood based on user symptoms. It provides diagnostic feedback, recommended actions, and suggested medications, helping users make informed health decisions before consulting a healthcare professional.
+                        </p>
+                        <div class="flex items-center justify-between text-sm text-gray-500">
+                            <span><i class="far fa-calendar mr-2"></i>2025</span>
+                            <span><i class="fas fa-download mr-2"></i> downloads</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project Card 4 -->
+            <div class="project-card" data-category="research ml" data-aos="fade-up" data-aos-delay="0">
+                <div class="card-minimal overflow-hidden group">
+                    <div class="relative overflow-hidden h-64 bg-gray-200">
+                        <img src="{{ url_for('static', filename='images/project-4.png') }}" 
+                             alt="Project 4" 
+                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all duration-300 flex items-center justify-center">
+                            <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex gap-4">
+                                <a href="#" class="btn-primary text-sm" target="_blank">
+                                    <i class="fas fa-external-link-alt mr-2"></i>Live
+                                </a>
+                                <a href="https://victor-e.netlify.app/" class="btn-secondary text-sm" target="_blank">
+                                    <i class="fab fa-github mr-2"></i>Code
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="text-xs px-3 py-1 bg-black text-white rounded-full">HTML 5</span>
+                            <span class="text-xs px-3 py-1 bg-black text-white rounded-full">Tailwind</span>
+                            <span class="text-xs px-3 py-1 bg-black text-white rounded-full">React</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Portfolio Website</h3>
+                        <p class="text-gray-600 mb-4 text-justify">
+                            Built a professional portfolio website using React and modern frameworks to showcase projects, case studies, and client work. Designed for fast performance, responsive layouts, and an intuitive user experience.
+                        </p>
+                        <div class="flex items-center justify-between text-sm text-gray-500">
+                            <span><i class="far fa-calendar mr-2"></i>2024</span>
+                            <span><i class="fas fa-award mr-2"></i>Built</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project Card 5 -->
+            <div class="project-card" data-category="opensource web" data-aos="fade-up" data-aos-delay="100">
+                <div class="card-minimal overflow-hidden group">
+                    <div class="relative overflow-hidden h-64 bg-gray-200">
+                        <img src="{{ url_for('static', filename='images/project-5.png') }}" 
+                             alt="Project 5" 
+                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all duration-300 flex items-center justify-center">
+                            <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex gap-4">
+                                <a href="#" class="btn-primary text-sm" target="_blank">
+                                    <i class="fas fa-external-link-alt mr-2"></i>Demo
+                                </a>
+                                <a href="#" class="btn-secondary text-sm" target="_blank">
+                                    <i class="fab fa-github mr-2"></i>Code
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="text-xs px-3 py-1 bg-black text-white rounded-full">Machine Learning</span>
+                            <span class="text-xs px-3 py-1 bg-black text-white rounded-full">Flask (Python)</span>
+                            <span class="text-xs px-3 py-1 bg-black text-white rounded-full">Open Source</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2 ">Pneunomia Prediction Model</h3>
+                        <p class="text-gray-600 mb-4 text-justify">
+                            Developed a Pneumonia Prediction Model using machine learning techniques to assist in the early detection of pneumonia from patient data and medical images. The model was built with Python and trained on a carefully preprocessed dataset to ensure accuracy and reliability.
+                        </p>
+                        <div class="flex items-center justify-between text-sm text-gray-500">
+                            <span><i class="far fa-calendar mr-2"></i>2024</span>
+                            <span><i class="far fa-star mr-2"></i>450 stars</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project Card 6 -->
+            <div class="project-card" data-category="web" data-aos="fade-up" data-aos-delay="200">
+                <div class="card-minimal overflow-hidden group">
+                    <div class="relative overflow-hidden h-64 bg-gray-200">
+                        <img src="{{ url_for('static', filename='images/project-6.png') }}" 
+                             alt="Project 6" 
+                             class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-all duration-300 flex items-center justify-center">
+                            <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex gap-4">
+                                <a href="https://language-translator-mtrbi3vn5-emmanuel-victors-projects.vercel.app/" class="btn-primary text-sm" target="_blank">
+                                    <i class="fas fa-external-link-alt mr-2"></i>Live Site
+                                </a>
+                                <a href="#" class="btn-secondary text-sm" target="_blank">
+                                    <i class="fab fa-github mr-2"></i>Code
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex flex-wrap gap-2 mb-3">
+                            <span class="text-xs px-3 py-1 bg-black text-white rounded-full">HTML5</span>
+                            <span class="text-xs px-3 py-1 bg-black text-white rounded-full">CSS (Tailwind)</span>
+                            <span class="text-xs px-3 py-1 bg-black text-white rounded-full">JavaScript</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Language Translations Application</h3>
+                        <p class="text-gray-600 mb-4 text-justify">
+                            anguage Translator App – A lightweight web application built with HTML, CSS, and JavaScript, enabling real-time text translation across multiple languages through an intuitive and responsive interface.
+                        </p>
+                        <div class="flex items-center justify-between text-sm text-gray-500">
+                            <span><i class="far fa-calendar mr-2"></i>2025</span>
+                            <span><i class="far fa-building mr-2"></i>Final Year Project</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- No Results Message -->
+        <div id="no-results" class="text-center py-20 hidden">
+            <i class="fas fa-folder-open text-6xl text-gray-300 mb-4"></i>
+            <p class="text-xl text-gray-600">No projects found in this category</p>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-4 gap-8 text-center">
+            <div data-aos="fade-up" data-aos-delay="0">
+                <div class="text-5xl font-bold mb-2">20+</div>
+                <p class="text-gray-600">Projects Completed</p>
+            </div>
+            <div data-aos="fade-up" data-aos-delay="100">
+                <div class="text-5xl font-bold mb-2">15+</div>
+                <p class="text-gray-600">Happy Clients</p>
+            </div>
+            <div data-aos="fade-up" data-aos-delay="200">
+                <div class="text-5xl font-bold mb-2">4+</div>
+                <p class="text-gray-600">Years Experience</p>
+            </div>
+            <div data-aos="fade-up" data-aos-delay="300">
+                <div class="text-5xl font-bold mb-2">6+</div>
+                <p class="text-gray-600">Open Source</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-20 bg-black text-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center" data-aos="zoom-in">
+        <h2 class="text-4xl md:text-5xl font-display font-bold mb-6">
+            Have a Project in Mind?
+        </h2>
+        <p class="text-xl text-gray-300 mb-8">
+            Let's collaborate and bring your ideas to life
+        </p>
+        <a href="{{ url_for('contact') }}" class="btn-primary bg-white text-black hover:bg-gray-100 border-white">
+            Start a Conversation
+        </a>
+    </div>
+</section>
+
+{% endblock %}

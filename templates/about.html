@@ -1,0 +1,305 @@
+{% extends "base.html" %}
+
+{% block title %}About{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="py-32 bg-gradient-to-br from-gray-50 to-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 class="section-title text-center mx-auto" data-aos="fade-up">About Me</h1>
+        <p class="text-center text-gray-600 text-xl max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+            Get to know more about my journey, skills, and passion for technology
+        </p>
+    </div>
+</section>
+
+<!-- Main About Section -->
+<section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-2 gap-12 items-center">
+            <!-- Image Gallery -->
+            <div data-aos="fade-right">
+                <div class="grid grid-cols-2 gap-4">
+                    <img src="{{ url_for('static', filename='images/about-1.jpg') }}" 
+                         alt="About" 
+                         class="rounded-lg shadow-lg w-full h-64 object-cover">
+                    <img src="{{ url_for('static', filename='images/about-2.jpg') }}" 
+                         alt="About" 
+                         class="rounded-lg shadow-lg w-full h-64 object-cover">
+                    <img src="{{ url_for('static', filename='images/about-3.jpg') }}" 
+                         alt="About" 
+                         class="rounded-lg shadow-lg w-full h-64 object-cover col-span-2">
+                </div>
+            </div>
+            
+            <!-- Bio -->
+            <div data-aos="fade-left">
+                <h2 class="text-3xl font-display font-bold mb-6">My Story</h2>
+                <p class="text-lg text-gray-700 leading-relaxed mb-4">
+                    Hello! I'm Emmanuel Victor Itopa a passionate software developer and researcher based in Nigeria. 
+                    My journey into technology started 4 Years Ago when I discovered my love for problem-solving 
+                    and creating innovative solutions.
+                </p>
+                
+                <p class="text-lg text-gray-700 leading-relaxed mb-4">
+                    Throughout my career, I've had the privilege of working on diverse projects ranging from 
+                    full-stack web applications to cutting-edge research in Machine Learning. I believe 
+                    in writing clean, maintainable code and staying updated with the latest industry trends.
+                </p>
+                
+                <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                    When I'm not coding, you can find me Reading, Playing Keyboard, Researching, contributing to open-source projects, 
+                    or mentoring aspiring developers. I'm always excited to take on new challenges and collaborate 
+                    on meaningful projects.
+                </p>
+                
+                <a href="{{ url_for('static', filename='resume/Victor Resume.pdf') }}" class="btn btn-primary">
+    <i class="fas fa-download mr-2"></i>Download Resume
+</a>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Skills Section -->
+<section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="section-title text-center mx-auto" data-aos="fade-up">Skills & Expertise</h2>
+        
+        <div class="grid md:grid-cols-2 gap-8 mt-12">
+            <!-- Technical Skills -->
+            <div data-aos="fade-up" data-aos-delay="0">
+                <h3 class="text-2xl font-bold mb-6">Technical Skills</h3>
+                
+                <div class="mb-6">
+                    <div class="flex justify-between mb-2">
+                        <span class="font-semibold">Python</span>
+                        <span class="text-gray-600">95%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="95%"></div>
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <div class="flex justify-between mb-2">
+                        <span class="font-semibold">JavaScript</span>
+                        <span class="text-gray-600">70%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="90%"></div>
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <div class="flex justify-between mb-2">
+                        <span class="font-semibold">Flask Framework</span>
+                        <span class="text-gray-600">95%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="95%"></div>
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <div class="flex justify-between mb-2">
+                        <span class="font-semibold">Django</span>
+                        <span class="text-gray-600">90%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="90%"></div>
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <div class="flex justify-between mb-2">
+                        <span class="font-semibold">SQL / NoSQL</span>
+                        <span class="text-gray-600">80%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="80%"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Professional Skills -->
+            <div data-aos="fade-up" data-aos-delay="100">
+                <h3 class="text-2xl font-bold mb-6">Professional Skills</h3>
+                
+                <div class="mb-6">
+                    <div class="flex justify-between mb-2">
+                        <span class="font-semibold">Problem Solving</span>
+                        <span class="text-gray-600">95%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="95%"></div>
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <div class="flex justify-between mb-2">
+                        <span class="font-semibold">Team Collaboration</span>
+                        <span class="text-gray-600">90%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="90%"></div>
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <div class="flex justify-between mb-2">
+                        <span class="font-semibold">Project Management</span>
+                        <span class="text-gray-600">85%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="85%"></div>
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <div class="flex justify-between mb-2">
+                        <span class="font-semibold">Communication</span>
+                        <span class="text-gray-600">90%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="90%"></div>
+                    </div>
+                </div>
+                
+                <div class="mb-6">
+                    <div class="flex justify-between mb-2">
+                        <span class="font-semibold">Research & Analysis</span>
+                        <span class="text-gray-600">95%</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" data-width="95%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Experience Timeline -->
+<section class="py-20 bg-white">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="section-title text-center mx-auto" data-aos="fade-up">Experience & Education</h2>
+        
+        <div class="mt-12">
+            <!-- Timeline Item 1 -->
+            <div class="timeline-item" data-aos="fade-up" data-aos-delay="0">
+                <div class="timeline-dot"></div>
+                <div class="card-minimal">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-xl font-bold">Software Developer</h3>
+                        <span class="text-gray-600 font-semibold">2021 - Present</span>
+                    </div>
+                    <p class="text-gray-700 font-semibold mb-2">CST Tech Speed Innovative</p>
+                    <p class="text-gray-600">
+                        Led development of scalable web applications, mentored junior developers, 
+                        and implemented best practices across the team.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Timeline Item 2 -->
+            <div class="timeline-item" data-aos="fade-up" data-aos-delay="100">
+                <div class="timeline-dot"></div>
+                <div class="card-minimal">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-xl font-bold">Full-Stack Developer</h3>
+                        <span class="text-gray-600 font-semibold">2020 - 2022</span>
+                    </div>
+                    <p class="text-gray-700 font-semibold mb-2">Startup Solutions</p>
+                    <p class="text-gray-600">
+                        Developed and maintained multiple client projects, worked with cross-functional 
+                        teams, and delivered high-quality solutions.
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Timeline Item 3 -->
+            <div class="timeline-item" data-aos="fade-up" data-aos-delay="200">
+                <div class="timeline-dot"></div>
+                <div class="card-minimal">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="text-xl font-bold">Bachelor Degree in Computer Science</h3>
+                        <span class="text-gray-600 font-semibold">2019 - 2024</span>
+                    </div>
+                    <p class="text-gray-700 font-semibold mb-2">Federal University, Lokoja Kogi State Nigeria</p>
+                    <p class="text-gray-600">
+                        Specialized in Software Engineering and Machine Learning. 
+                        Published research on [Design and Implementation of Two Factor Authentication (2FA) Through Facial Recognition and Password Code for Social Media].
+                    </p>
+                </div>
+            </div>
+            
+            <!-- Timeline Item 4 -->
+            
+        </div>
+    </div>
+</section>
+
+<!-- Interests -->
+<section class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="section-title text-center mx-auto" data-aos="fade-up">Interests & Hobbies</h2>
+        
+        <div class="grid md:grid-cols-4 gap-8 mt-12">
+            <div class="text-center" data-aos="zoom-in" data-aos-delay="0">
+                <div class="w-20 h-20 bg-black text-white rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-code text-3xl"></i>
+                </div>
+                <h3 class="font-bold text-lg mb-2">Open Source</h3>
+                <p class="text-gray-600">Contributing to community projects</p>
+            </div>
+            
+            <div class="text-center" data-aos="zoom-in" data-aos-delay="100">
+                <div class="w-20 h-20 bg-black text-white rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-book text-3xl"></i>
+                </div>
+                <h3 class="font-bold text-lg mb-2">Reading</h3>
+                <p class="text-gray-600">Tech blogs and sci-fi novels</p>
+            </div>
+            
+            <div class="text-center" data-aos="zoom-in" data-aos-delay="200">
+                <div class="w-20 h-20 bg-black text-white rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-music text-3xl"></i>
+                </div>
+                <h3 class="font-bold text-lg mb-2">Music</h3>
+                <p class="text-gray-600">Playing Keyboard and listening to Songs</p>
+            </div>
+            
+            <div class="text-center" data-aos="zoom-in" data-aos-delay="300">
+                <div class="w-20 h-20 bg-black text-white rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-hiking text-3xl"></i>
+                </div>
+                <h3 class="font-bold text-lg mb-2">Travel</h3>
+                <p class="text-gray-600">Exploring new places</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-20 bg-black text-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center" data-aos="zoom-in">
+        <h2 class="text-4xl md:text-5xl font-display font-bold mb-6">
+            Interested in Working Together?
+        </h2>
+        <p class="text-xl text-gray-300 mb-8">
+            I'm always open to discussing new projects and opportunities.
+        </p>
+        <div class="flex flex-wrap justify-center gap-4">
+            <a href="{{ url_for('contact') }}" class="btn-primary bg-white text-black hover:bg-gray-100 border-white">
+                Contact Me
+            </a>
+            <a href="{{ url_for('projects') }}" class="btn-secondary border-white text-white hover:bg-white hover:text-black">
+                View My Work
+            </a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

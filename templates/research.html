@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Research{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="py-32 bg-gradient-to-br from-gray-50 to-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 class="section-title text-center mx-auto" data-aos="fade-up">Research & Publications</h1>
+        <p class="text-center text-gray-600 text-xl max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="100">
+            Exploring cutting-edge technologies and contributing to academic knowledge
+        </p>
+    </div>
+</section>
+
+<!-- Research Areas -->
+<section class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="section-title text-center mx-auto" data-aos="fade-up">Research Areas</h2>
+        
+        <div class="grid md:grid-cols-3 gap-8 mt-12">
+            <div class="card-minimal text-center" data-aos="fade-up" data-aos-delay="0">
+                <div class="w-20 h-20 bg-black text-white rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-brain text-3xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-4">Machine Learning</h3>
+                <p class="text-gray-600">
+                    Deep learning, neural networks, and AI applications in real-world scenarios. 
+                    Focus on computer vision and natural language processing.
+                </p>
+            </div>
+            
+            <div class="card-minimal text-center" data-aos="fade-up" data-aos-delay="100">
+                <div class="w-20 h-20 bg-black text-white rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-code-branch text-3xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-4">Software Engineering</h3>
+                <p class="text-gray-600">
+                    Scalable systems architecture, distributed computing, and best practices 
+                    in modern software development.
+                </p>
+            </div>
+            
+            <div class="card-minimal text-center" data-aos="fade-up" data-aos-delay="200">
+                <div class="w-20 h-20 bg-black text-white rounded-full flex items-center justify-center mx-auto mb-6">
+                    <i class="fas fa-shield-alt text-3xl"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-4">Project Writing</h3>
+                <p class="text-gray-600">
+                    I specialize in project writing, paper reviews, and delivering well-structured academic project chapters** with clarity, originality, and professional quality.
+
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA Section -->
+<section class="py-20 bg-black text-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center" data-aos="zoom-in">
+        <h2 class="text-4xl md:text-5xl font-display font-bold mb-6">
+            Interested in Collaboration?
+        </h2>
+        <p class="text-xl text-gray-300 mb-8">
+            I'm always open to research partnerships and speaking opportunities
+        </p>
+        <a href="{{ url_for('contact') }}" class="btn-primary bg-white text-black hover:bg-gray-100 border-white">
+            Get in Touch
+        </a>
+    </div>
+</section>
+
+{% endblock %}
