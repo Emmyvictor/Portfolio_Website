@@ -21,16 +21,20 @@ app.config["SECRET_KEY"] = os.getenv(
     "SECRET_KEY", "dev-secret-key-change-in-production"
 )
 
-# Email configuration
-app.config["MAIL_SERVER"] = os.getenv("MAIL_SERVER", "smtp.gmail.com")
-app.config["MAIL_PORT"] = int(os.getenv("MAIL_PORT", "587"))
+# ========================================
+# MAILTRAP EMAIL CONFIGURATION (Sandbox)
+# ========================================
+app.config["MAIL_SERVER"] = os.getenv("MAIL_SERVER", "sandbox.smtp.mailtrap.io")
+app.config["MAIL_PORT"] = int(os.getenv("MAIL_PORT", "2525"))
 app.config["MAIL_USE_TLS"] = os.getenv("MAIL_USE_TLS", "True").lower() == "true"
 app.config["MAIL_USE_SSL"] = os.getenv("MAIL_USE_SSL", "False").lower() == "true"
-app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME")
-app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD")
-app.config["MAIL_DEFAULT_SENDER"] = os.getenv("MAIL_DEFAULT_SENDER")
-
-# Additional mail settings for reliability
+app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME", "edfa1a4af2637c")
+app.config["MAIL_PASSWORD"] = os.getenv(
+    "MAIL_PASSWORD", "your_full_mailtrap_password_here"
+)
+app.config["MAIL_DEFAULT_SENDER"] = os.getenv(
+    "MAIL_DEFAULT_SENDER", "noreply@example.com"
+)
 app.config["MAIL_MAX_EMAILS"] = None
 app.config["MAIL_ASCII_ATTACHMENTS"] = False
 
@@ -94,7 +98,6 @@ def contact():
 @csrf.exempt
 def send_contact():
     try:
-        # Handle both JSON and form submissions
         if request.is_json:
             data = request.get_json()
         else:
@@ -105,7 +108,6 @@ def send_contact():
         subject = data.get("subject", "").strip()
         message = data.get("message", "").strip()
 
-        # Validate required fields
         if not all([name, email, subject, message]):
             logger.warning("Contact form submission missing required fields")
             return (
@@ -113,12 +115,10 @@ def send_contact():
                 400,
             )
 
-        # Basic email validation
         if "@" not in email or "." not in email:
             logger.warning(f"Invalid email format: {email}")
             return jsonify({"success": False, "message": "Invalid email address."}), 400
 
-        # Check email configuration
         admin_email = app.config.get("MAIL_DEFAULT_SENDER")
         if not admin_email:
             logger.error("MAIL_DEFAULT_SENDER not configured")
@@ -142,7 +142,6 @@ def send_contact():
                 recipients=[admin_email],
                 reply_to=email,
             )
-
             msg.html = f"""
             <html>
                 <body style="font-family: Arial, sans-serif; padding: 20px; background-color: #f5f5f5;">
@@ -150,14 +149,12 @@ def send_contact():
                         <h2 style="color: #333; border-bottom: 3px solid #000; padding-bottom: 10px;">
                             New Contact Form Submission
                         </h2>
-                        <div style="margin: 20px 0;">
-                            <p style="margin: 10px 0;"><strong>From:</strong> {name}</p>
-                            <p style="margin: 10px 0;"><strong>Email:</strong> <a href="mailto:{email}">{email}</a></p>
-                            <p style="margin: 10px 0;"><strong>Subject:</strong> {subject}</p>
-                        </div>
-                        <div style="background: #f9f9f9; padding: 20px; border-left: 4px solid #000; margin: 20px 0;">
-                            <p style="margin: 0;"><strong>Message:</strong></p>
-                            <p style="margin: 10px 0; line-height: 1.6;">{message}</p>
+                        <p><strong>From:</strong> {name}</p>
+                        <p><strong>Email:</strong> <a href="mailto:{email}">{email}</a></p>
+                        <p><strong>Subject:</strong> {subject}</p>
+                        <div style="background: #f9f9f9; padding: 20px; border-left: 4px solid #000;">
+                            <p><strong>Message:</strong></p>
+                            <p>{message}</p>
                         </div>
                         <p style="color: #666; font-size: 12px; margin-top: 20px;">
                             Sent from your portfolio contact form
@@ -166,11 +163,9 @@ def send_contact():
                 </body>
             </html>
             """
-
             logger.info(f"Sending email to admin: {admin_email}")
             mail.send(msg)
             logger.info("Admin email sent successfully")
-
         except Exception as e:
             logger.error(f"Failed to send admin email: {str(e)}")
             return (
@@ -183,42 +178,30 @@ def send_contact():
                 500,
             )
 
-        # Send auto-reply to user
+        # Auto-reply
         try:
             auto_reply = Message(
                 subject="Thank you for contacting me!",
                 sender=admin_email,
                 recipients=[email],
             )
-
             auto_reply.html = f"""
             <html>
-                <body style="font-family: Arial, sans-serif; padding: 20px; background-color: #f5f5f5;">
-                    <div style="max-width: 600px; margin: 0 auto; background: white; padding: 30px; border-radius: 10px;">
-                        <h2 style="color: #333;">Thank You for Reaching Out!</h2>
-                        <p>Hi <strong>{name}</strong>,</p>
-                        <p style="line-height: 1.6;">
-                            Thank you for contacting me through my portfolio. I've received your message 
-                            about "<strong>{subject}</strong>" and will get back to you as soon as possible.
-                        </p>
-                        <p style="line-height: 1.6;">
-                            I typically respond within 24 hours during business days.
-                        </p>
-                        <div style="margin-top: 30px; padding-top: 20px; border-top: 2px solid #eee;">
-                            <p style="margin: 5px 0;">Best regards,</p>
-                            <p style="margin: 5px 0;"><strong>Emmanuel Victor Itopa</strong></p>
-                        </div>
-                    </div>
+                <body style="font-family: Arial, sans-serif; padding: 20px;">
+                    <h2>Thank You for Reaching Out!</h2>
+                    <p>Hi <strong>{name}</strong>,</p>
+                    <p>Thank you for contacting me through my portfolio. 
+                    I've received your message about "<strong>{subject}</strong>" 
+                    and will get back to you as soon as possible.</p>
+                    <p>I typically respond within 24 hours during business days.</p>
+                    <p>Best regards,<br><strong>Emmanuel Victor Itopa</strong></p>
                 </body>
             </html>
             """
-
             logger.info(f"Sending auto-reply to: {email}")
             mail.send(auto_reply)
             logger.info("Auto-reply sent successfully")
-
         except Exception as e:
-            # Log but don't fail if auto-reply fails
             logger.warning(f"Failed to send auto-reply: {str(e)}")
 
         return jsonify({"success": True, "message": "Message sent successfully!"}), 200
@@ -239,7 +222,6 @@ def send_contact():
 # ---------- TEST EMAIL ENDPOINT ----------
 @app.route("/api/test-email")
 def test_email():
-    """Test endpoint to verify email configuration"""
     try:
         admin_email = app.config.get("MAIL_DEFAULT_SENDER")
 
@@ -256,8 +238,7 @@ def test_email():
             sender=admin_email,
             recipients=[admin_email],
         )
-
-        msg.body = "This is a test email. If you receive this, your email configuration is working!"
+        msg.body = "This is a test email. If you receive this, your Mailtrap configuration is working!"
 
         logger.info(f"Sending test email to: {admin_email}")
         mail.send(msg)
@@ -267,7 +248,7 @@ def test_email():
             jsonify(
                 {
                     "success": True,
-                    "message": "Test email sent successfully! Check your inbox.",
+                    "message": "Test email sent successfully! Check your Mailtrap inbox.",
                 }
             ),
             200,
@@ -304,7 +285,6 @@ def download_resume():
 # ---------- HEALTH CHECK ----------
 @app.route("/health")
 def health_check():
-    """Health check endpoint for monitoring"""
     return (
         jsonify(
             {
@@ -354,8 +334,6 @@ def internal_error(e):
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
     debug = os.environ.get("FLASK_DEBUG", "False").lower() == "true"
-
     logger.info(f"Starting Flask app on port {port}")
     logger.info(f"Debug mode: {debug}")
-
     app.run(debug=debug, host="0.0.0.0", port=port)
